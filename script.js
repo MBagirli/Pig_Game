@@ -14,7 +14,8 @@ let first__player__score = 0;
 let second__player__score = 0;
 
 roll__dice.addEventListener('click', function () {
-  let random__number = Math.ceil(Math.random() * 6);
+  // let random__number = Math.ceil(Math.random() * 6);
+  let random__number = 6;
   if (player__count == 0) {
     First__Person(random__number);
   } else {
@@ -24,17 +25,26 @@ roll__dice.addEventListener('click', function () {
 
 hold.addEventListener('click', function () {
   if (player__count == 0) {
-    players.forEach(function (element) {
-      element.classList.toggle('container__player--order');
-    });
-    first__player__current.textContent = first__player__actual__score.textContent;
-    player__count++;
+    if (first__player__current.textContent >= 100) {
+      first__player__actual__score.textContent++;
+      resetting1();
+
+    } else {
+      players.forEach(function (element) {
+        element.classList.toggle('container__player--order');
+      });
+      player__count++;
+    }
   } else {
-    players.forEach(function (element) {
-      element.classList.toggle('container__player--order');
-    });
-    second__player__current.textContent = second__player__actual__score.textContent;
-    player__count = 0;
+    if (second__player__current.textContent >= 100) {
+      second__player__actual__score.textContent++;
+      resetting2();
+    } else {
+      players.forEach(function (element) {
+        element.classList.toggle('container__player--order');
+      });
+      player__count = 0;
+    }
   }
 });
 
@@ -43,6 +53,7 @@ new__game.addEventListener('click', function () {
   first__player__score = 0;
   second__player__score = 0;
   img.style.backgroundImage = "";
+  player__count = 0;
   document.querySelectorAll('.container__player__p').forEach(function (element) {
     element.textContent = 0;
   });
@@ -65,8 +76,7 @@ function First__Person(random__number) {
         element.classList.toggle('container__player--order');
       });
       first__player__score = 0;
-      first__player__actual__score.textContent = first__player__score;
-      first__player__current.textContent = first__player__actual__score.textContent;
+      first__player__current.textContent = first__player__score;
       player__count++;
       break;
     case 2:
@@ -94,7 +104,7 @@ function First__Person(random__number) {
 
 function First__Person__Score(random__number) {
   first__player__score += random__number;
-  first__player__actual__score.textContent = first__player__score;
+  first__player__current.textContent = first__player__score;
 }
 
 function Second__Person(random__number) {
@@ -105,8 +115,7 @@ function Second__Person(random__number) {
         element.classList.toggle('container__player--order');
       });
       second__player__score = 0;
-      second__player__actual__score.textContent = second__player__score;
-      second__player__current.textContent = second__player__actual__score.textContent;
+      second__player__current.textContent = second__player__score;
       player__count = 0;
       break;
     case 2:
@@ -134,5 +143,39 @@ function Second__Person(random__number) {
 
 function Second__Person__Score(random__number) {
   second__player__score += random__number;
-  second__player__actual__score.textContent = second__player__score;
+  second__player__current.textContent = second__player__score;
+}
+
+function resetting1() {
+  player__count = 0;
+  first__player__score = 0;
+  second__player__score = 0;
+  img.style.backgroundImage = "";
+  player__count = 0;
+  document.querySelectorAll('.container__player__results__p').forEach(function (element) {
+    element.textContent = 0;
+  });
+  if (!player1.classList.contains('container__player--order')) {
+    player1.classList.add('container__player--order');
+  }
+  if (player2.classList.contains('container__player--order')) {
+    player2.classList.remove('container__player--order');
+  }
+}
+
+function resetting2() {
+  player__count = 0;
+  first__player__score = 0;
+  second__player__score = 0;
+  img.style.backgroundImage = "";
+  player__count = 1;
+  document.querySelectorAll('.container__player__results__p').forEach(function (element) {
+    element.textContent = 0;
+  });
+  if (player1.classList.contains('container__player--order')) {
+    player1.classList.add('container__player--order');
+  }
+  if (!player2.classList.contains('container__player--order')) {
+    player2.classList.remove('container__player--order');
+  }
 }
