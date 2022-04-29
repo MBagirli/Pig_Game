@@ -14,8 +14,7 @@ let first__player__score = 0;
 let second__player__score = 0;
 
 roll__dice.addEventListener('click', function () {
-  // let random__number = Math.ceil(Math.random() * 6);
-  let random__number = 6;
+  let random__number = Math.ceil(Math.random() * 6);
   if (player__count == 0) {
     First__Person(random__number);
   } else {
